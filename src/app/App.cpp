@@ -128,23 +128,23 @@ bool App::initialize()
 
     camera->setAspectRatio((float)windowWidth / (float)windowHeight);
 
-    // Water pool
-    for (int x = 5; x < 59; ++x) {
-        for (int z = 5; z < 59; ++z) {
-            for (int y = 2; y < 25; ++y) {
-                grid->set(x, y, z, Material::WATER);
-            }
-        }
-    }
+    // // Water pool
+    // for (int x = 5; x < 59; ++x) {
+    //     for (int z = 5; z < 59; ++z) {
+    //         for (int y = 2; y < 25; ++y) {
+    //             grid->set(x, y, z, Material::WATER);
+    //         }
+    //     }
+    // }
 
-    // Sand pile
-    for (int i = 15; i < 49; ++i) {
-        for (int j = 15; j < 49; ++j) {
-            for (int k = 35; k < 55; ++k) {
-                grid->set(i, k, j, Material::SAND);
-            }
-        }
-    }
+    // // Sand pile
+    // for (int i = 15; i < 49; ++i) {
+    //     for (int j = 15; j < 49; ++j) {
+    //         for (int k = 35; k < 55; ++k) {
+    //             grid->set(i, k, j, Material::SAND);
+    //         }
+    //     }
+    // }
 
     // GOL random
     // for (int x = 24; x < 40; ++x) {
@@ -165,15 +165,15 @@ bool App::initialize()
     //     grid->set(x, y, z, Material::GOL);
     // }
 
-    // // Permanent GOL cube
-    // int cx = 32, cy = 40, cz = 32;
+    // Permanent GOL cube
+    int cx = 32, cy = 40, cz = 32;
 
-    // for (int dx = 0; dx < 2; ++dx)
-    // for (int dy = 0; dy < 2; ++dy)
-    // for (int dz = 0; dz < 2; ++dz)
-    // {
-    //     grid->set(cx + dx, cy + dy, cz + dz, Material::GOL);
-    // }
+    for (int dx = 0; dx < 2; ++dx)
+    for (int dy = 0; dy < 2; ++dy)
+    for (int dz = 0; dz < 2; ++dz)
+    {
+        grid->set(cx + dx, cy + dy, cz + dz, Material::GOL);
+    }
 
 
     running = true;
