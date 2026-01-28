@@ -34,7 +34,7 @@ To run:
     * Rendering functionality
 
 #### 3D Game of Life Rules
-Conway's Game of Life doesn't work in 3D with it's typical rules. I found the following rules to be relatively stable:
+Conway's Game of Life doesn't work in 3D with its typical rules. I found the following rules to be relatively stable:
 * Live cell: survives if it has 5–7 neighbors; otherwise dies.
 * Empty cell: becomes alive if it has exactly 6 neighbors.
 
