@@ -21,9 +21,9 @@ void Rules::update(Grid& grid)
                 } else if (m == Material::WATER) {
                     updateWater(grid, x, y, z);
                 }
-                else {
-                    updateGOL(m, grid, x, y, z);
-                }
+                // else {
+                //     updateGOL(m, grid, x, y, z);
+                // }
             }
         }
     }
