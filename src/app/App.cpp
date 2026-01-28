@@ -2,6 +2,13 @@
 #include "../sim/Rules.hpp"
 #include <iostream>
 #include <glm/glm.hpp>
+#include <random>
+
+namespace {
+    std::mt19937 rng(42);
+    std::uniform_real_distribution<float> prob(0.0f, 1.0f);
+
+}
 
 static App* g_app = nullptr;
 
@@ -121,27 +128,57 @@ bool App::initialize()
 
     camera->setAspectRatio((float)windowWidth / (float)windowHeight);
 
-    // Create a larger water pool covering most of the bottom
-    for (int x = 5; x < 59; ++x) {
-        for (int z = 5; z < 59; ++z) {
-            for (int y = 2; y < 25; ++y) {
-                grid->set(x, y, z, Material::WATER);
-            }
-        }
-    }
+    // // Water pool
+    // for (int x = 5; x < 59; ++x) {
+    //     for (int z = 5; z < 59; ++z) {
+    //         for (int y = 2; y < 25; ++y) {
+    //             grid->set(x, y, z, Material::WATER);
+    //         }
+    //     }
+    // }
 
-    // Add sand above the pool to fall into it
-    for (int i = 15; i < 49; ++i) {
-        for (int j = 15; j < 49; ++j) {
-            for (int k = 35; k < 55; ++k) {
-                grid->set(i, k, j, Material::SAND);
-            }
-        }
-    }
+    // // Sand pile
+    // for (int i = 15; i < 49; ++i) {
+    //     for (int j = 15; j < 49; ++j) {
+    //         for (int k = 35; k < 55; ++k) {
+    //             grid->set(i, k, j, Material::SAND);
+    //         }
+    //     }
+    // }
 
-    running = true;
-    paused = false;
-    return true;
+    // GOL random
+    // for (int x = 24; x < 40; ++x) {
+    //     for (int y = 32; y < 48; ++y) {
+    //         for (int z = 24; z < 40; ++z) {
+    //             if (prob(rng) < 0.38f) {  // ← IMPORTANT
+    //                 grid->set(x, y, z, Material::GOL);
+    //             }
+    //         }
+    //     }
+    // }
+
+    // // GOL cube
+    // for (int x = 26; x < 38; ++x)
+    // for (int y = 34; y < 46; ++y)
+    // for (int z = 26; z < 38; ++z)
+    // {
+    //     grid->set(x, y, z, Material::GOL);
+    // }
+
+    // // Permanent GOL cube
+    // int cx = 32, cy = 40, cz = 32;
+
+    // for (int dx = 0; dx < 2; ++dx)
+    // for (int dy = 0; dy < 2; ++dy)
+    // for (int dz = 0; dz < 2; ++dz)
+    // {
+    //     grid->set(cx + dx, cy + dy, cz + dz, Material::GOL);
+    // }
+
+
+    // running = true;
+    // paused = false;
+    // return true;
 }
 
 // Handle inputs from mouse/keyboard
@@ -192,6 +229,8 @@ void App::handleInput()
         currentBrush = Material::WATER;
     if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
         currentBrush = Material::WALL;
+    if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
+        currentBrush = Material::GOL;
 }
 
 // Update material rules

@@ -21,9 +21,9 @@ void Rules::update(Grid& grid)
                 } else if (m == Material::WATER) {
                     updateWater(grid, x, y, z);
                 }
-                // else {
-                //     updateGOL(m, grid, x, y, z);
-                // }
+                else {
+                    updateGOL(m, grid, x, y, z);
+                }
             }
         }
     }
@@ -95,35 +95,37 @@ void Rules::updateWater(Grid& grid, int x, int y, int z)
 
 void Rules::updateGOL(Material m, Grid& grid, int x, int y, int z)
 {
-    // Get adjacent cells
-    auto full_below = grid.get(x, y - 1, z) == Material::EMPTY;
-    auto full_above = grid.get(x, y + 1, z) == Material::EMPTY;
-    auto full_back = grid.get(x - 1, y, z) == Material::EMPTY;
-    auto full_forward = grid.get(x + 1, y, z) == Material::EMPTY;
-
+    // Count neighbors
     int count = 0;
-    if (full_below) count++;
-    if (full_above) count++;
-    if (full_back) count++;
-    if (full_forward) count++;
-
-    if (m == Material::GOL)
+    for (int dz = -1; dz <= 1; ++dz)
+    for (int dy = -1; dy <= 1; ++dy)
+    for (int dx = -1; dx <= 1; ++dx)
     {
-        // Underpopulation and overpopulation
-        if (count < 2){
+        if (dx == 0 && dy == 0 && dz == 0) continue;
+
+        int nx = x + dx;
+        int ny = y + dy;
+        int nz = z + dz;
+
+        if (grid.inBounds(nx, ny, nz) &&
+            grid.get(nx, ny, nz) == Material::GOL)
+        {
+            count++;
+        }
+    }
+
+    if (m == Material::GOL) {
+        if (count < 5 || count > 7) {
             grid.getNextBuffer()[grid.index(x, y, z)] = Material::EMPTY;
         }
-        else if (count > 3) {
-            grid.getNextBuffer()[grid.index(x, y, z)] = Material::EMPTY;
-        }
-        // Else, continue to be alive
+        // else survives (already copied)
     }
-    else {
-        if (count == 3) {
-            grid.getNextBuffer()[grid.index(x, y, z)] = Material::GOL;;
+    else if (m == Material::EMPTY) {
+        if (count == 6) {
+            grid.getNextBuffer()[grid.index(x, y, z)] = Material::GOL;
         }
-        // Else, continue to be empty
     }
+
     
 
 }
